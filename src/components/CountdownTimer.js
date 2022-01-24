@@ -51,7 +51,7 @@ class CountdownTimer extends React.Component {
   }
 
   updateTime() {
-    let time = new Date(this.state.time);
+    const time = new Date(this.state.time);
     let hours = time.getUTCHours().toString();
     let minutes = time.getUTCMinutes().toString();
     let seconds = time.getUTCSeconds().toString();
@@ -59,7 +59,7 @@ class CountdownTimer extends React.Component {
     minutes = minutes.length === 1 ? `0${minutes}` : minutes;
     seconds = seconds.length === 1 ? `0${seconds}` : seconds;
 
-    return hours + ":" + minutes + ":" + seconds;
+    return `${hours}:${minutes}:${seconds}`;
   }
 
   render() {
