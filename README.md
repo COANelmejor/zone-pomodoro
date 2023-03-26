@@ -1,4 +1,62 @@
-# Getting Started with Create React App
+# Zone Pomodoro
+
+<a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>
+
+A simple Pomodoro timer for when you need to be in "The Zone".
+
+## Description
+
+When you use "The Pomodoro Technique" you have to work for 25 minutes and then take a 5 minute break (and 15 minutes every 4th break).
+
+You stay focus for around 25 minutes, but some times you need a minute or two to be able to focus. (If not more)
+
+When you are in "The Zone" you can work for as long as you stay focused.
+
+This two ("The Pomodoro" and "The Zone") are not exactly very compatible between each other.
+
+Because when you enter "The Zone" and you have to work only for 25 minutes, you can't take a 5 minute break. YOU ARE FOCUSED IN "THE ZONE".
+
+For that reason, I created this project to help you stay focused in "The Zone" how much you want.
+
+The principal idea is to get "Break Time" and use it when you get out of "The Zone".
+
+## How it works
+
+### Setup
+
+At the beginning you need to set your "Pomodoro".
+
+You will need 5 parameters:
+
+| Parameter | Description | Pomodoro Default | Zone Recommended |
+|----------|-------------|---:|---:|
+| **Work Time**   | The number of minutes you have to work, before you get a "Break Time". | 25 minutes | 5 minutes |
+| **Short Break Time** | The number of minutes you have to take on a short break. | 5 minutes | 1 minutes |
+| **Long Break Time**  | The number of minutes you have to take on a long break. | 15 minutes | 3 minutes |
+| **# of Short Breaks** | The number of "Short Breaks" you have to take before you get start to get "Long Break Time". | 3 times | 3 times |
+| **# of Long Breaks** | The number of "Long Break" you have to take before you get a "Work Time". | 1 times | 1 times |
+
+Then you can start your **"Zone Pomodoro"**.
+
+### Usage
+
+You have two timers: **"Work"** and **"Break"**.
+
+Once you start the "Work" Timer you will have to work for the minutes you set.
+
+Every time the "Work" Timer reaches 0, the "Break" Timer gain an amount of time, defined by your parameters, and the "Work" Timer will be reseted and start the countdown again automatically.
+
+When you get out of "The Zone" you should to take a "Break".
+
+You can take a break whenever you need as long as you have accumulated time on your "Break" Timer.
+
+When you start the "Break" Timer, the "Work" Timer will stop saving it current time.
+
+When you finish your "Break Time", resume the "Work" Timer, so you can add more "Break Time" to your "Break" Timer.
+
+**Note:** Only one timer can be running at a time. Starting a timer will stop the other one, but stopping a timer will not start the other one.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
