@@ -8,7 +8,7 @@ function App() {
   const [workTime, setWorkTime] = useState(Number(localStorage.getItem('workTime')) || 50);
   const [restTime, setRestTime] = useState(Number(localStorage.getItem('restTime')) || 10);
   const [cycles, setCycles] = useState(Number(localStorage.getItem('cycles')) || 4);
-  const [bigRestMultiplier, setBigRestMultiplier] = useState(Number(localStorage.getItem('bigRestMultiplier')) || 3);
+  const [longRestMultiplier, setLongRestMultiplier] = useState(Number(localStorage.getItem('bigRestMultiplier')) || 3);
   
   const [currentCycle, setCurrentCycle] = useState(Number(localStorage.getItem('currentCycle')) || 1);
   const [remainWorkTime, setRemainWorkTime] = useState(Number(localStorage.getItem('remainWorkTime')) || workTime);
@@ -39,11 +39,11 @@ function App() {
   }, [cycles]);
 
   useEffect(() => {
-    if (bigRestMultiplier < 1) {
-      setBigRestMultiplier(1);
+    if (longRestMultiplier < 1) {
+      setLongRestMultiplier(1);
     }
-    localStorage.setItem('bigRestMultiplier', bigRestMultiplier);
-  }, [bigRestMultiplier]);
+    localStorage.setItem('bigRestMultiplier', longRestMultiplier);
+  }, [longRestMultiplier]);
 
   useEffect(() => {
     if (currentCycle < 1) {
@@ -111,7 +111,7 @@ function App() {
         if (remainWorkTime === 0) {
           setRemainWorkTime(workTime);
           if (currentCycle % cycles === 0) {
-            setRemainRestTime(remainRestTime + (restTime * bigRestMultiplier));
+            setRemainRestTime(remainRestTime + (restTime * longRestMultiplier));
           } else {
             setRemainRestTime(remainRestTime + restTime);
           }
@@ -167,31 +167,32 @@ function App() {
   
   return (
     <div className="App">
-      <div className="WorkTimer">
-        <h1>Work Timer</h1>
-        <h2>{isWorkTimerRunning ? "Running" : "Stopped"}</h2>
-        <h2>{CronometerTimeView(remainWorkTime)}</h2>
+      <h1 className="App-Title">Zone Pomodoro</h1>
+      <div className="WorkTimer Timer">
+        <h2>Work Timer</h2>
+        <h3>{isWorkTimerRunning ? "Running" : "Stopped"}</h3>
+        <h3>{CronometerTimeView(remainWorkTime)}</h3>
         <button onClick={startWorkTimer}>Start</button>
         <button onClick={stopWorkTimer}>Stop</button>
         <button onClick={resetWorkTimer}>Reset</button>
       </div>
-      <div className="RestTimer">
-        <h1>Rest Timer</h1>
-        <h2>{isRestTimerRunning ? "Running" : "Stopped"}</h2>
-        <h2>{CronometerTimeView(remainRestTime)}</h2>
+      <div className="RestTimer Timer">
+        <h2>Rest Timer</h2>
+        <h3>{isRestTimerRunning ? "Running" : "Stopped"}</h3>
+        <h3>{CronometerTimeView(remainRestTime)}</h3>
         <button onClick={startRestTimer}>Start</button>
         <button onClick={stopRestTimer}>Stop</button>
         <button onClick={resetRestTimer}>Reset</button>
       </div>
       <div className="Cycles">
-        <h1>Current Cycle</h1>
-        <h2>{currentCycle}</h2>
+        <h2>Current Cycle</h2>
+        <h3>{currentCycle}</h3>
       </div>
-      <div className='Settings'>
-        <h1>Settings</h1>
-        <div className='WorkTime'>
-          <h2>Work Time</h2>
-          <h2>{CronometerTimeView(workTime)}</h2>
+      <div className="Settings">
+        <h2>Settings</h2>
+        <div className="WorkTime">
+          <h3>Work Time</h3>
+          <h3>{CronometerTimeView(workTime)}</h3>
           <button onClick={() => setWorkTimeButton(-36000)}>-1h</button>
           <button onClick={() => setWorkTimeButton(-6000)}>-10m</button>
           <button onClick={() => setWorkTimeButton(-600)}>-1m</button>
@@ -205,9 +206,9 @@ function App() {
           <button onClick={() => setWorkTimeButton(6000)}>+10m</button>
           <button onClick={() => setWorkTimeButton(36000)}>+1h</button>
         </div>
-        <div className='RestTime'>
-          <h2>Rest Time</h2>
-          <h2>{CronometerTimeView(restTime)}</h2>
+        <div className="RestTime">
+          <h3>Rest Time</h3>
+          <h3>{CronometerTimeView(restTime)}</h3>
           <button onClick={() => setRestTimeButton(-36000)}>-1h</button>
           <button onClick={() => setRestTimeButton(-6000)}>-10m</button>
           <button onClick={() => setRestTimeButton(-600)}>-1m</button>
@@ -221,17 +222,25 @@ function App() {
           <button onClick={() => setRestTimeButton(6000)}>+10m</button>
           <button onClick={() => setRestTimeButton(36000)}>+1h</button>
         </div>
-        <div className='Cycles'>
-          <h2>Cycles for big rest</h2>
-          <h2>{cycles}</h2>
+        <div className="Cycles">
+          <h3>Cycles for big rest</h3>
+          <h3>{cycles}</h3>
           <button onClick={() => setCycles(cycles + 1)}>+</button>
           <button onClick={() => setCycles(cycles - 1)}>-</button>
         </div>
-        <div className='BigRestMultiplier'>
-          <h2>Big Rest Multiplier</h2>
-          <h2>{bigRestMultiplier}</h2>
-          <button onClick={() => setBigRestMultiplier(bigRestMultiplier + 1)}>+</button>
-          <button onClick={() => setBigRestMultiplier(bigRestMultiplier - 1)}>-</button>
+        <div className="BigRestMultiplier">
+          <h3>Big Rest Multiplier</h3>
+          <h3>{longRestMultiplier}x</h3>
+          <h4>
+            {CronometerTimeView(restTime)} →{" "}
+            {CronometerTimeView(restTime * longRestMultiplier)}
+          </h4>
+          <button onClick={() => setLongRestMultiplier(longRestMultiplier + 1)}>
+            +
+          </button>
+          <button onClick={() => setLongRestMultiplier(longRestMultiplier - 1)}>
+            -
+          </button>
         </div>
       </div>
     </div>
