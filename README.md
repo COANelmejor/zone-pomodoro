@@ -26,15 +26,14 @@ The principal idea is to get "Break Time" and use it when you get out of "The Zo
 
 At the beginning you need to set your "Pomodoro".
 
-You will need 5 parameters:
+You will need 4 parameters:
 
 | Parameter | Description | Pomodoro Default | Zone Recommended |
 |----------|-------------|---:|---:|
-| **Work Time**   | The number of minutes you have to work, before you get a "Break Time". | 25 minutes | 5 minutes |
-| **Short Break Time** | The number of minutes you have to take on a short break. | 5 minutes | 1 minutes |
-| **Long Break Time**  | The number of minutes you have to take on a long break. | 15 minutes | 3 minutes |
-| **# of Short Breaks** | The number of "Short Breaks" you have to take before you get start to get "Long Break Time". | 3 times | 3 times |
-| **# of Long Breaks** | The number of "Long Break" you have to take before you get a "Work Time". | 1 times | 1 times |
+| **Work Time**   | The time you have to work, before you get "Break Time". | 25 minutes | 5 minutes |
+| **Short Break Time or "Rest Time"** | The number of minutes you have to take on a short break. | 5 minutes | 1 minutes |
+| **Long break multiplier** | How big should be long breaks compared to short bracks. | 3 times | 3 times |
+| **# of Cycles for big Breaks** | The number of "Short Breaks" you have to take before you get start to get "Long Break Time". | 4 cycles | 4 cycles |
 
 Then you can start your **"Zone Pomodoro"**.
 
