@@ -5,14 +5,14 @@ function App() {
   
   const tick = 100;
 
-  const [workTime, setWorkTime] = useState(50);
-  const [restTime, setRestTime] = useState(10);
-  const [cycles, setCycles] = useState(4);
-  const [bigRestMultiplier, setBigRestMultiplier] = useState(3);
+  const [workTime, setWorkTime] = useState(Number(localStorage.getItem('workTime')) || 50);
+  const [restTime, setRestTime] = useState(Number(localStorage.getItem('restTime')) || 10);
+  const [cycles, setCycles] = useState(Number(localStorage.getItem('cycles')) || 4);
+  const [bigRestMultiplier, setBigRestMultiplier] = useState(Number(localStorage.getItem('bigRestMultiplier')) || 3);
   
-  const [currentCycle, setCurrentCycle] = useState(1);
-  const [remainWorkTime, setRemainWorkTime] = useState(25);
-  const [remainRestTime, setRemainRestTime] = useState(0);
+  const [currentCycle, setCurrentCycle] = useState(Number(localStorage.getItem('currentCycle')) || 1);
+  const [remainWorkTime, setRemainWorkTime] = useState(Number(localStorage.getItem('remainWorkTime')) || workTime);
+  const [remainRestTime, setRemainRestTime] = useState(Number(localStorage.getItem('remainRestTime')) || 0);
 
   const [isWorkTimerRunning, setIsWorkTimerRunning] = useState(false);
   const [isRestTimerRunning, setIsRestTimerRunning] = useState(false);
@@ -21,13 +21,50 @@ function App() {
     if (workTime < 1) {
       setWorkTime(1);
     }
+    localStorage.setItem('workTime', workTime);
   }, [workTime]);
 
   useEffect(() => {
     if (restTime < 1) {
       setRestTime(1);
     }
+    localStorage.setItem('restTime', restTime);
   }, [restTime]);
+
+  useEffect(() => {
+    if (cycles < 1) {
+      setCycles(1);
+    }
+    localStorage.setItem('cycles', cycles);
+  }, [cycles]);
+
+  useEffect(() => {
+    if (bigRestMultiplier < 1) {
+      setBigRestMultiplier(1);
+    }
+    localStorage.setItem('bigRestMultiplier', bigRestMultiplier);
+  }, [bigRestMultiplier]);
+
+  useEffect(() => {
+    if (currentCycle < 1) {
+      setCurrentCycle(1);
+    }
+    localStorage.setItem('currentCycle', currentCycle);
+  }, [currentCycle]);
+
+  useEffect(() => {
+    if (remainWorkTime < 0) {
+      setRemainWorkTime(0);
+    }
+    localStorage.setItem('remainWorkTime', remainWorkTime);
+  }, [remainWorkTime]);
+
+  useEffect(() => {
+    if (remainRestTime < 0) {
+      setRemainRestTime(0);
+    }
+    localStorage.setItem('remainRestTime', remainRestTime);
+  }, [remainRestTime]);
   
   const startWorkTimer = () => {
     setIsWorkTimerRunning(true);
