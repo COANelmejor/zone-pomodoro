@@ -1,6 +1,6 @@
 import React from "react";
 
-import CronometerTimeView from "../utils/CronometerTimeView";
+import CronometerTimeView from "../../utils/CronometerTimeView";
 
 function BigRestMultiplierSetup({
   longRestMultiplier,

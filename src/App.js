@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 // Components
-import WorkTimer from "./components/WorkTimer";
-import RestTimer from "./components/RestTimer";
-import CurrentCycle from "./components/CurrentCycle";
-import WorkTimerSetup from "./components/WorkTimerSetup";
-import RestTimerSetup from "./components/RestTimerSetup";
-import CyclesSetup from "./components/CyclesSetup";
-import BigRestMultiplierSetup from "./components/BigRestMultiplierSetup";
+import WorkTimer from "./components/cards/WorkTimer";
+import RestTimer from "./components/cards/RestTimer";
+import CurrentCycle from "./components/cards/CurrentCycle";
+import WorkTimerSetup from "./components/cards/WorkTimerSetup";
+import RestTimerSetup from "./components/cards/RestTimerSetup";
+import CyclesSetup from "./components/cards/CyclesSetup";
+import BigRestMultiplierSetup from "./components/cards/BigRestMultiplierSetup";
 
 // Utils
 import CronometerTimeView from "./utils/CronometerTimeView";
@@ -169,8 +169,8 @@ function App() {
   };
 
   function setWorkTimeButton(time) {
-    resetWorkTimer();
     setWorkTime(workTime + time);
+    resetWorkTimer();
   }
 
   function setRestTimeButton(time) {
@@ -220,7 +220,11 @@ function App() {
           cycles={cycles} 
           setCycles={setCycles} 
         />
-        <BigRestMultiplierSetup longRestMultiplier={longRestMultiplier} restTime={restTime} setLongRestMultiplier={setLongRestMultiplier} />
+        <BigRestMultiplierSetup
+          longRestMultiplier={longRestMultiplier}
+          restTime={restTime}
+          setLongRestMultiplier={setLongRestMultiplier}
+        />
       </div>
     </div>
   );

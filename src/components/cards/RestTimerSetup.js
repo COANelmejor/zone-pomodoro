@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Utils
-import CronometerTimeView from '../utils/CronometerTimeView';
+import CronometerTimeView from '../../utils/CronometerTimeView';
 
 function RestTimerSetup({ restTime, setRestTimeButton }) {
   return (
