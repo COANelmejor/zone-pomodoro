@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
+import WorkTimer from "./components/WorkTimer";
+import RestTimer from "./components/RestTimer";
+import CurrentCycle from "./components/CurrentCycle";
+
+import CronometerTimeView from "./utils/CronometerTimeView";
+
 function App() {
   const tick = 100;
 
@@ -144,27 +150,6 @@ function App() {
     }
   };
 
-  function CronometerTimeView(time) {
-    // 1 second = 100 time units
-    // 1 minute = 6000 time units
-    // 1 hour = 360000 time units
-    // if time == 0, return 00:00:00.00
-    // if time == 6000 (1 minute), return 00:01:00.00
-    // if time == 360000 (1 hour), return 01:00:00.00
-    // if time == 360100 (1 hour and 1 second), return 01:00:01.00
-
-    let hours = Math.floor(time / 36000);
-    let minutes = Math.floor((time - hours * 36000) / 600);
-    let seconds = Math.floor((time - hours * 36000 - minutes * 600) / 10);
-    let milliseconds = time - hours * 36000 - minutes * 600 - seconds * 10;
-
-    return `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}.${milliseconds
-      .toString()
-      .padStart(1, "0")}`;
-  }
-
   function setWorkTimeButton(time) {
     resetWorkTimer();
     setWorkTime(workTime + time);
@@ -185,66 +170,24 @@ function App() {
         Zone Pomodoro
       </h1>
       <div className="flex flex-row">
-        <div className="WorkTimer Timer flex flex-col col-50">
-          <h2 className="text-4xl font-bold p-2">Work Timer</h2>
-          <h3 className="text-3xl font-bold p-2">
-            {isWorkTimerRunning ? "Running" : "Stopped"}
-          </h3>
-          <h3 className="text-5xl font-bold p-2">
-            {CronometerTimeView(remainWorkTime)}
-          </h3>
-          <div className="flex flex-row">
-            <button
-              onClick={startWorkTimer}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4">
-              Start
-            </button>
-            <button
-              onClick={stopWorkTimer}
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4">
-              Stop
-            </button>
-            <button
-              onClick={resetWorkTimer}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2 px-4">
-              Reset
-            </button>
-          </div>
-        </div>
-        <div className="RestTimer Timer flex flex-col col-50">
-          <h2 className="text-4xl font-bold p-2">Rest Timer</h2>
-          <h3 className="text-3xl font-bold p-2">
-            {isRestTimerRunning ? "Running" : "Stopped"}
-          </h3>
-          <h3 className="text-5xl font-bold p-2">
-            {CronometerTimeView(remainRestTime)}
-          </h3>
-          <div className="flex flex-row">
-            <button
-              onClick={startRestTimer}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4">
-              Start
-            </button>
-            <button
-              onClick={stopRestTimer}
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4">
-              Stop
-            </button>
-            <button
-              onClick={resetRestTimer}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2 px-4">
-              Reset
-            </button>
-          </div>
-        </div>
+        <WorkTimer
+          CronometerTimeView={CronometerTimeView}
+          isWorkTimerRunning={isWorkTimerRunning}
+          remainWorkTime={remainWorkTime}
+          resetWorkTimer={resetWorkTimer}
+          startWorkTimer={startWorkTimer}
+          stopWorkTimer={stopWorkTimer}
+        />
+        <RestTimer
+          CronometerTimeView={CronometerTimeView}
+          isRestTimerRunning={isRestTimerRunning}
+          remainRestTime={remainRestTime}
+          resetRestTimer={resetRestTimer}
+          startRestTimer={startRestTimer}
+          stopRestTimer={stopRestTimer}
+        />
       </div>
-      <div className="Cycles flex flex-col col-50">
-        <h2 className="text-4xl font-bold p-2">Current Cycle</h2>
-        <h3 className="text-5xl font-bold p-2">{currentCycle}</h3>
-        <h3 className="text-3xl font-bold p-2">
-          {currentCycle % cycles === 0 ? "Long" : "Short"} Rest Cycle
-        </h3>
-      </div>
+      <CurrentCycle currentCycle={currentCycle} cycles={cycles} />
       <div className="Settings flex flex-col col-50">
         <h2 className="text-4xl font-bold p-2">Settings</h2>
         <div className="WorkTime">
@@ -252,32 +195,32 @@ function App() {
           <div className="flex justify-center items-center">
             <div className="flex flex-col col-25">
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(-1)}>
                 -0.1s
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(-10)}>
                 -1s
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(-100)}>
                 -10s
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(-600)}>
                 -1m
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(-6000)}>
                 -10m
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(-36000)}>
                 -1h
               </button>
@@ -289,32 +232,32 @@ function App() {
             </div>
             <div className="flex flex-col col-25">
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(1)}>
                 +0.1s
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(10)}>
                 +1s
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(100)}>
                 +10s
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(600)}>
                 +1m
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(6000)}>
                 +10m
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setWorkTimeButton(36000)}>
                 +1h
               </button>
@@ -326,32 +269,32 @@ function App() {
           <div className="flex justify-center items-center">
             <div className="flex flex-col col-25">
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(-1)}>
                 -0.1s
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(-10)}>
                 -1s
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(-100)}>
                 -10s
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(-600)}>
                 -1m
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(-6000)}>
                 -10m
               </button>
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(-36000)}>
                 -1h
               </button>
@@ -363,32 +306,32 @@ function App() {
             </div>
             <div className="flex flex-col col-25">
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(1)}>
                 +0.1s
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(10)}>
                 +1s
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(100)}>
                 +10s
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(600)}>
                 +1m
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(6000)}>
                 +10m
               </button>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setRestTimeButton(36000)}>
                 +1h
               </button>
@@ -399,13 +342,15 @@ function App() {
           <h3 className="text-3xl font-bold p-2">Cycles for big rest</h3>
           <div className="flex justify-center items-center">
             <button
-              className="flex flex-col col-span-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+              className="flex flex-col col-span-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
               onClick={() => setCycles(cycles - 1)}>
               -
             </button>
-            <h3 className="flex flex-col col-span-2 text-5xl font-bold p-2">{cycles}</h3>
+            <h3 className="flex flex-col col-span-2 text-5xl font-bold p-2">
+              {cycles}
+            </h3>
             <button
-              className="flex flex-col col-span-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+              className="flex flex-col col-span-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
               onClick={() => setCycles(cycles + 1)}>
               +
             </button>
@@ -416,7 +361,7 @@ function App() {
           <div className="flex justify-center">
             <div className="flex flex-col col-25">
               <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setLongRestMultiplier(longRestMultiplier - 1)}>
                 -
               </button>
@@ -430,7 +375,7 @@ function App() {
             </div>
             <div className="flex flex-col col-25">
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 px-4 text-2xl"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 text-2xl"
                 onClick={() => setLongRestMultiplier(longRestMultiplier + 1)}>
                 +
               </button>
