@@ -9,9 +9,6 @@ import RestTimerSetup from "./components/cards/RestTimerSetup";
 import CyclesSetup from "./components/cards/CyclesSetup";
 import BigRestMultiplierSetup from "./components/cards/BigRestMultiplierSetup";
 
-// Utils
-import CronometerTimeView from "./utils/CronometerTimeView";
-
 function App() {
   const tick = 100;
 
@@ -45,6 +42,7 @@ function App() {
     if (workTime < 1) {
       setWorkTime(1);
     }
+    setRemainWorkTime(workTime);
     localStorage.setItem("workTime", workTime);
   }, [workTime]);
 
@@ -189,7 +187,6 @@ function App() {
       </h1>
       <div className="flex flex-row">
         <WorkTimer
-          CronometerTimeView={CronometerTimeView}
           isWorkTimerRunning={isWorkTimerRunning}
           remainWorkTime={remainWorkTime}
           resetWorkTimer={resetWorkTimer}
@@ -197,7 +194,6 @@ function App() {
           stopWorkTimer={stopWorkTimer}
         />
         <RestTimer
-          CronometerTimeView={CronometerTimeView}
           isRestTimerRunning={isRestTimerRunning}
           remainRestTime={remainRestTime}
           resetRestTimer={resetRestTimer}
@@ -213,8 +209,8 @@ function App() {
           workTime={workTime}
         />
         <RestTimerSetup
-          restTime={restTime}
           setRestTimeButton={setRestTimeButton}
+          restTime={restTime}
         />
         <CyclesSetup 
           cycles={cycles} 
