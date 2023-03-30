@@ -1,7 +1,8 @@
 import React from "react";
 
+import CronometerTimeView from "../../utils/CronometerTimeView";
+
 function WorkTimer({
-  CronometerTimeView,
   isWorkTimerRunning,
   remainWorkTime,
   resetWorkTimer,

@@ -1,7 +1,7 @@
 import React from "react";
+import CronometerTimeView from "../../utils/CronometerTimeView";
 
 function RestTimer({
-  CronometerTimeView,
   isRestTimerRunning,
   remainRestTime,
   resetRestTimer,
