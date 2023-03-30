@@ -1,5 +1,6 @@
 import React from "react";
 import CronometerTimeView from "../../utils/CronometerTimeView";
+import Button from "../../components/bites/Button";
 
 function RestTimer({
   isRestTimerRunning,
@@ -18,21 +19,9 @@ function RestTimer({
         {CronometerTimeView(remainRestTime)}
       </h3>
       <div className="flex flex-row">
-        <button
-          onClick={startRestTimer}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2">
-          Start
-        </button>
-        <button
-          onClick={stopRestTimer}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-2">
-          Stop
-        </button>
-        <button
-          onClick={resetRestTimer}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2">
-          Reset
-        </button>
+        <Button onClickFn={startRestTimer} text="Start" color="green" />
+        <Button onClickFn={stopRestTimer} text="Stop" color="red" />
+        <Button onClickFn={resetRestTimer} text="Reset" color="blue" />
       </div>
     </div>
   );
