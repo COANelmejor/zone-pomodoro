@@ -1,6 +1,6 @@
 import React from "react";
 import CronometerTimeView from "../../utils/CronometerTimeView";
-import Button from "../../components/bites/Button";
+import Button from "../bites/Button";
 
 function RestTimer({
   isRestTimerRunning,

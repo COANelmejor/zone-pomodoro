@@ -1,7 +1,7 @@
 import React from "react";
 import uuid from "react-native-uuid";
 
-import Button from "../../components/bites/Button";
+import Button from "../bites/Button";
 import CronometerTimeView from "../../utils/CronometerTimeView";
 
 function WorkTimerSetup({ setWorkTimeButton, workTime }) {
