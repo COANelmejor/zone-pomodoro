@@ -202,22 +202,25 @@ function MainPomodoro() {
         />
       </div>
       <CurrentCycle currentCycle={currentCycle} cycles={cycles} />
-      <div className="Settings flex flex-col col-50">
-        <h2 className="text-4xl font-bold p-2">Settings</h2>
-        <WorkTimerSetup
-          setWorkTimeButton={setWorkTimeButton}
-          workTime={workTime}
-        />
-        <RestTimerSetup
-          setRestTimeButton={setRestTimeButton}
-          restTime={restTime}
-        />
-        <CyclesSetup cycles={cycles} setCycles={setCycles} />
-        <BigRestMultiplierSetup
-          longRestMultiplier={longRestMultiplier}
-          restTime={restTime}
-          setLongRestMultiplier={setLongRestMultiplier}
-        />
+      <div className="Settings flex flex-col">
+        <h2 className="text-5xl font-bold px-4 py-2">Settings</h2>
+        <div className="flex flex-row columns-4 gap-1 align-middle">
+
+            <WorkTimerSetup
+              setWorkTimeButton={setWorkTimeButton}
+              workTime={workTime}
+            />
+            <RestTimerSetup
+              setRestTimeButton={setRestTimeButton}
+              restTime={restTime}
+            />
+            <CyclesSetup cycles={cycles} setCycles={setCycles} />
+            <BigRestMultiplierSetup
+              longRestMultiplier={longRestMultiplier}
+              restTime={restTime}
+              setLongRestMultiplier={setLongRestMultiplier}
+            />
+        </div>
       </div>
     </div>
   );
